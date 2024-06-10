@@ -1,0 +1,4 @@
+id,title,body,author_id,published_at
+1,"My First Article","This is my first article.",1,"2024-06-06 15:00:00"
+2,"My Second Article","This is my second article.",2,"2024-06-06 15:00:00"
+3,"My Third Article","This is my third article.",1,"2024-06-06 15:00:00"
