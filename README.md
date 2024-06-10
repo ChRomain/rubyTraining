@@ -48,6 +48,17 @@ query {
 }
 ```
 
+Query all articles written by a specific author
+```
+query {
+  articlesByAuthor (authorId: "{{authorId}}") {
+    body
+    id
+    title
+  }
+}
+```
+
 Query a specific article
 ```
 query {
