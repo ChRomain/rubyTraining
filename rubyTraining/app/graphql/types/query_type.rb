@@ -32,11 +32,15 @@ module Types
     end
 
     def articles
-      Article.all
+      authenticate_user!
+      ArticlePolicy::Scope.new(context[:current_user], Article).resolve
     end
 
     def article(id:)
-      Article.find(id)
+      authenticate_user!
+      article = Article.find(id)
+      authorize(article, :show?)
+      article
     end
 
     # Authors queries
@@ -46,10 +50,12 @@ module Types
     end
 
     def authors
+      authenticate_user!
       Author.all
     end
 
     def author(id:)
+      authenticate_user!
       Author.find(id)
     end
 
@@ -57,5 +63,18 @@ module Types
     # They will be entry points for queries on your schema.
 
     field :articles_by_author, resolver: Queries::ArticlesByAuthor
+
+    private
+
+    def authenticate_user!
+      raise GraphQL::ExecutionError, "You need to log in to perform this action" unless context[:current_user]
+    end
+
+    def authorize(record, query)
+      policy = Pundit.policy!(context[:current_user], record)
+      unless policy.public_send(query)
+        raise GraphQL::ExecutionError, "You are not authorized to perform this action"
+      end
+    end
   end
 end
