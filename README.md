@@ -121,10 +121,12 @@ Create a new article - Author must exist and be valid
 ```
 mutation {
   createArticle (
-    title: "Article test",
-    body: "Body test",
-    authorId: "{{authorId}}",
-    published_at: "2999-01-01T01:01:01Z"
+    input: {
+      title: "Article test",
+      body: "Body test",
+      authorId: "{{authorId}}",
+      published_at: "2999-01-01T01:01:01Z"
+    }
   ) {
     title
   }
@@ -135,9 +137,11 @@ Update a specific article - Article id must exist and be valid
 ```
 mutation {
   updateArticle (
-    id: "{{articleId}}",
-    title: "New name",
-    body: "New body"
+    input: {
+      id: "{{articleId}}",
+      title: "New name",
+      body: "New body"
+    }
   ) {
     title
   }
@@ -146,7 +150,13 @@ mutation {
 
 Delete a specific article by his id - Article id must exist and be valid
 ```
-mutation { deleteArticle(id: "{{articleId}}") }
+mutation {
+  deleteArticle (
+    input: {
+      id: "{{articleId}}"
+    }
+  )
+}
 ```
 
 
