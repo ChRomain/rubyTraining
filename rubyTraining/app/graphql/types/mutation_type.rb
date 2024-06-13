@@ -2,6 +2,8 @@
 
 module Types
   class MutationType < Types::BaseObject
+    field :sign_up, mutation: Mutations::SignUp
+    field :log_in, mutation: Mutations::LogIn
     # TODO: remove me
 #     field :test_field, String, null: false,
 #       description: "An example field added by the generator"
@@ -50,6 +52,7 @@ module Types
     end
 
     def create_article(title:, body:, author_id:, published_at: nil)
+      authorize_admin_or_author!(author_id)
       Article.create(title: title, body: body, author_id: author_id, published_at: published_at)
     end
 
@@ -63,7 +66,8 @@ module Types
 
     def update_article(id:, title: nil, body: nil, author_id: nil, published_at: nil)
       article = Article.find(id)
-      article.update(title: title, body: body, author_id: author_id, published_at: published_at)
+      authorize_admin_or_author!(article.author_id)
+      article.update!(title: title, body: body, author_id: author_id, published_at: published_at)
       article
     end
 
@@ -73,8 +77,17 @@ module Types
 
     def delete_article(id:)
       article = Article.find(id)
-      article.destroy
+      authorize_admin_or_author!(article.author_id)
+      article.destroy!
       true
+    end
+
+    private
+
+    def authorize_admin_or_author!(author_id)
+      user = context[:current_user]
+      return if user&.role == 'admin' || (user&.role == 'user' && user&.id == author_id)
+      raise GraphQL::ExecutionError, 'You are not authorized to perform this action'
     end
   end
 end

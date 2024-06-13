@@ -34,6 +34,38 @@ Block auto completion
 Tke care of alias attack
 ....
 
+### Authentication
+You will have to be authenticated in order to play with some mutation/query.
+Steps:
+1. Execute logIn query:
+```
+mutation {
+    signUp (
+        input: {
+        email: "email@email.com"
+        password: "pwd"
+        role: admin
+        }
+    ) { email role }
+}
+```
+2. LogIn with created user
+```
+mutation {
+  logIn(
+      input: {
+        email: "email@email.com"
+        password: "pwd"
+      }
+  ) {
+    token
+  }
+}
+```
+If user exist a bearer will be prompt in output.
+Copy it and for next query/mutation add it in Headers section as follow:
+{ "Authorization": "Bearer PREVIOUS_TOKEN" }
+
 ### Query
 Query all articles
 ```
@@ -73,7 +105,7 @@ query {
 ```
 
 ### Mutation
-For now no input validation and no authentication
+For now no input validation
 
 Create a new article - Author must exist and be valid
 ```
