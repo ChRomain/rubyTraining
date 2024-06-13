@@ -8,6 +8,16 @@ rails server
 ```
 Open a browser and go in port 3000.
 
+## Routes endpoints:
+/articles: List all articles.
+/articles/new: Create article form.
+/articles/:id: Query a specific article.
+/articles/:id/edit: Update a specific article.
+/articles/:id/delete: Remove specific article.
+
+Some routes endpoints for author also available.
+
+
 ## Test definition:
 Due to time limitation test coverage is low. Just nominal case for Article geter.
 * Check title getter
