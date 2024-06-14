@@ -11,6 +11,7 @@ module Mutations
 
       type Types::UserType
 
+      # Sign Up resolver - Return User if success.
       def resolve(email:, password:, role:)
         User.create!(email: email, password: password, role: role)
       rescue ActiveRecord::RecordInvalid => e

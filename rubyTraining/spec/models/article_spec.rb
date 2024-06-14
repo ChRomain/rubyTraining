@@ -1,5 +1,9 @@
 require 'rails_helper'
 
+# Note: Here we just answers to question 4th of first exercise.
+# We just check that getter are ok.
+# Corner, validation, robustness, disaster (db down), authorization case etc are missing
+
 RSpec.describe Article, type: :model do
   let(:author) { Author.create(name: "J.K. Rowling", email: "mail@gmail.com") }
   let(:published_at) { Time.now }

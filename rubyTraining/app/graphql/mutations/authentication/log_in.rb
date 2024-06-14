@@ -7,6 +7,7 @@ module Mutations
       field :token, String, null: true
       field :user, Types::UserType, null: true
 
+      # Log in resolver. If success return jwt token
       def resolve(email:, password:)
         user = User.find_by(email: email)
         return GraphQL::ExecutionError.new('Invalid credentials') unless user&.authenticate(password)

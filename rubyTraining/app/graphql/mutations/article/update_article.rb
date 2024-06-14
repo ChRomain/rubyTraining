@@ -11,6 +11,7 @@ module Mutations
 
       type Types::ArticleType
 
+      # Update article resolver with auth management - Return article
       def resolve(id:, title: nil, body: nil, author_id: nil, published_at: nil)
         article = ::Article.find(id)
         authorize_admin_or_author!(article.author_id)

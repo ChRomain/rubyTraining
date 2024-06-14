@@ -4,12 +4,13 @@ module Types
   class QueryType < Types::BaseObject
     # Articles queries
     field :articles, [ArticleType], null: false
-    field :article, ArticleType, null: false do
-      argument :id, ID, required: true
-    end
 
     def articles
       Article.all
+    end
+
+    field :article, ArticleType, null: false do
+      argument :id, ID, required: true
     end
 
     def article(id:)
@@ -18,22 +19,20 @@ module Types
 
     # Authors queries
     field :authors, [AuthorType], null: false
-    field :author, AuthorType, null: false do
-      argument :id, ID, required: true
-    end
 
     def authors
       authorize_admin!
       Author.all
     end
 
+    field :author, AuthorType, null: false do
+      argument :id, ID, required: true
+    end
+
     def author(id:)
       authorize_admin!
       Author.find(id)
     end
-
-    # Add root-level fields here.
-    # They will be entry points for queries on your schema.
 
     field :articles_by_author, resolver: Queries::ArticlesByAuthor
 

@@ -6,6 +6,7 @@ module Mutations
 
       type Types::AuthorType
 
+      # Create author resolver - return Author
       def resolve(name:, email:)
         ::Author.create!(name: name, email: email)
       rescue ActiveRecord::RecordInvalid => e

@@ -7,6 +7,7 @@ module Mutations
 
       type Types::AuthorType
 
+      # Update author resolver - return Author or error
       def resolve(id:, name: nil, email: nil)
         author = ::Author.find(id)
         author.update!(name: name, email: email)

@@ -5,6 +5,7 @@ module Mutations
 
       type Boolean
 
+      # Delete author resolver - return true or error
       def resolve(id:)
         author = ::Author.find(id)
         author.destroy

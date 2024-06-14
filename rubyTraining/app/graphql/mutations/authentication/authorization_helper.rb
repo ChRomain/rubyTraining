@@ -3,6 +3,7 @@ module Mutations
     module AuthorizationHelper
       private
 
+      # Check if user is admin or author owner
       def authorize_admin_or_author!(author_id)
         user = context[:current_user]
         return if user&.role == 'admin' || (user&.role == 'user' && user&.id == author_id)

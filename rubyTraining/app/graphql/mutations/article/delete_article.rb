@@ -7,6 +7,7 @@ module Mutations
 
       type Boolean
 
+      # Delete article resolver with auth management - Return true if success
       def resolve(id:)
         article = ::Article.find(id)
         authorize_admin_or_author!(article.author_id)
